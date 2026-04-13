@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://your-app.onrender.com"; // ← Render URL-ni bura yaz
+const BACKEND_URL = "https://img2pdf-backend-k3zp.onrender.com"; // ← Render URL-ni bura yaz
 
 const fileInput = document.getElementById("file-input");
 const convertBtn = document.getElementById("convert-btn");

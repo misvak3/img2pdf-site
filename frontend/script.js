@@ -80,7 +80,10 @@ fileInput.addEventListener("change", (e) => addFiles(e.target.files));
 fileInputMore.addEventListener("change", (e) => addFiles(e.target.files));
 addMoreBtn.addEventListener("click", () => fileInputMore.click());
 
-dropZone.addEventListener("click", () => fileInput.click());
+dropZone.addEventListener("click", (e) => {
+  if (e.target === fileInput) return;
+  fileInput.click();
+});
 dropZone.addEventListener("keydown", (e) => {
   if (e.key === "Enter" || e.key === " ") fileInput.click();
 });

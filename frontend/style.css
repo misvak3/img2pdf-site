@@ -112,14 +112,6 @@ header {
   letter-spacing: 0.3px;
 }
 
-#file-input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
 
 /* ── PREVIEW SCREEN ── */
 .preview-header {

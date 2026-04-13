@@ -322,10 +322,11 @@ header {
 
 /* ── FOOTER ── */
 footer {
-  margin-top: auto;
-  padding: 32px 0 40px;
-  border-top: 1px solid var(--border);
-  margin-top: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 footer span {
@@ -333,6 +334,10 @@ footer span {
   font-size: 11px;
   color: var(--mid);
   line-height: 1.6;
+}
+
+.footer-credit {
+  white-space: nowrap;
 }
 
 /* ── RESPONSIVE ── */

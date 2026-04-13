@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ── TEST JOB ──────────────────────────────────────
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python qur
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Dependency-ləri yüklə
+        run: |
+          pip install -r backend/requirements.txt
+          pip install pytest
+
+      - name: Testləri çalıştır
+        run: pytest backend/ -v
+
+  # ── DEPLOY FRONTEND → NETLIFY ────────────────────
+  deploy-frontend:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Netlify-ə deploy et
+        uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: "./frontend"
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  # ── DEPLOY BACKEND → RENDER ──────────────────────
+  deploy-backend:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Render deploy hook çağır
+        run: |
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"

@@ -2,20 +2,99 @@
 <html lang="az">
 <head>
   <meta charset="UTF-8">
-  <title>IMG → PDF Çevirici</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>img2pdf — şəkilləri PDF-ə çevir</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <header>
+    <div class="logo">img2pdf</div>
+    <div class="tagline">şəkilləri PDF-ə çevir</div>
+  </header>
+
   <main>
-    <h1>Şəkilləri PDF-ə çevir</h1>
-    <div id="drop-zone">
-      <p>Şəkilləri bura sürüşdür və ya seç</p>
-      <input type="file" id="file-input" multiple accept="image/*">
-    </div>
-    <div id="preview"></div>
-    <button id="convert-btn" disabled>PDF yarat</button>
-    <div id="status"></div>
+
+    <!-- SCREEN 1: Upload -->
+    <section id="screen-upload" class="screen active">
+      <div id="drop-zone" tabindex="0" role="button" aria-label="Şəkil seçmək üçün klikləyin">
+        <div class="drop-icon">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="39" height="39" stroke="currentColor"/>
+            <path d="M20 10 L20 28 M12 20 L20 10 L28 20" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+          </svg>
+        </div>
+        <p class="drop-text">fayl seç və ya bura sürüşdür</p>
+        <p class="drop-sub">JPG, PNG, WEBP, BMP, TIFF</p>
+        <input type="file" id="file-input" multiple accept="image/*" tabindex="-1">
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Preview -->
+    <section id="screen-preview" class="screen">
+      <div class="preview-header">
+        <span id="file-count">0 fayl seçildi</span>
+        <button id="add-more-btn" class="btn-ghost">+ fayl əlavə et</button>
+        <input type="file" id="file-input-more" multiple accept="image/*" style="display:none">
+      </div>
+
+      <div id="preview-grid"></div>
+
+      <div class="preview-footer">
+        <button id="reset-btn" class="btn-ghost">sıfırla</button>
+        <button id="convert-btn" class="btn-primary">PDF yarat</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: Loading -->
+    <section id="screen-loading" class="screen">
+      <div class="loading-box">
+        <div class="loading-bar-wrap">
+          <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <p class="loading-text" id="loading-text">hazırlanır...</p>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: Done -->
+    <section id="screen-done" class="screen">
+      <div class="done-box">
+        <div class="done-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="0.5" y="0.5" width="47" height="47" stroke="currentColor"/>
+            <path d="M12 24 L21 33 L36 15" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+        </div>
+        <p class="done-text">PDF hazırdır</p>
+        <p class="done-sub" id="done-info"></p>
+        <div class="done-actions">
+          <a id="download-link" class="btn-primary" download="converted.pdf">yüklə</a>
+          <button id="new-convert-btn" class="btn-ghost">yenidən çevir</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: Error -->
+    <section id="screen-error" class="screen">
+      <div class="error-box">
+        <div class="error-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="0.5" y="0.5" width="47" height="47" stroke="currentColor"/>
+            <path d="M15 15 L33 33 M33 15 L15 33" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square"/>
+          </svg>
+        </div>
+        <p class="error-text">xəta baş verdi</p>
+        <p class="error-msg" id="error-msg"></p>
+        <button id="retry-btn" class="btn-ghost">geri qayıt</button>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <span>yalnız brauzerdə işlənir — fayllarınız serverə göndərilir, çevrilir, dərhal silinir</span>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

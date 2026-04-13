@@ -327,6 +327,9 @@ footer {
   align-items: flex-end;
   flex-wrap: wrap;
   gap: 8px;
+  border-top: 1px solid var(--border);
+  margin-top: 64px;
+  padding: 32px 0 40px;
 }
 
 footer span {

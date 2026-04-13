@@ -6,35 +6,36 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
-  # ── TEST JOB ──────────────────────────────────────
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
-      - name: Python qur
-        uses: actions/setup-python@v5
+      - name: Python install
+        uses: actions/setup-python@v5.4.0
         with:
           python-version: "3.11"
 
-      - name: Dependency-ləri yüklə
+      - name: Dependencys
         run: |
           pip install -r backend/requirements.txt
           pip install pytest
 
-      - name: Testləri çalıştır
+      - name: run tests
         run: pytest backend/ -v
 
-  # ── DEPLOY FRONTEND → NETLIFY ────────────────────
   deploy-frontend:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
 
-      - name: Netlify-ə deploy et
+      - name: deploy to netlify
         uses: nwtgck/actions-netlify@v3
         with:
           publish-dir: "./frontend"
@@ -45,12 +46,11 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
-  # ── DEPLOY BACKEND → RENDER ──────────────────────
   deploy-backend:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Render deploy hook çağır
+      - name: render deploy hook
         run: |
           curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"

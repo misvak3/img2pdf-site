@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #0a0a0a;
+  --white: #f5f5f0;
+  --mid: #888;
+  --border: #0a0a0a;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'IBM Plex Sans', sans-serif;
+}
+
+html {
+  font-size: 16px;
+  background: var(--white);
+  color: var(--black);
+}
+
+body {
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.logo {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mid);
+  letter-spacing: 0.5px;
+}
+
+/* ── SCREENS ── */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* ── UPLOAD SCREEN ── */
+#drop-zone {
+  border: 1px solid var(--border);
+  padding: 80px 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.1s;
+  outline: none;
+  position: relative;
+}
+
+#drop-zone:hover,
+#drop-zone:focus {
+  background: var(--black);
+  color: var(--white);
+}
+
+#drop-zone:hover .drop-sub,
+#drop-zone:focus .drop-sub {
+  color: #aaa;
+}
+
+#drop-zone.drag-over {
+  background: var(--black);
+  color: var(--white);
+}
+
+#drop-zone.drag-over .drop-sub {
+  color: #aaa;
+}
+
+.drop-icon {
+  margin-bottom: 24px;
+}
+
+.drop-text {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.drop-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mid);
+  letter-spacing: 0.3px;
+}
+
+#file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── PREVIEW SCREEN ── */
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-header span {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  flex: 1;
+}
+
+#preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 1px;
+}
+
+.preview-item {
+  background: var(--white);
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-item .item-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10,10,10,0.85);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 4px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-item .item-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.preview-item:hover .item-remove {
+  opacity: 1;
+}
+
+.preview-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+  padding: 10px 28px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.1s, color 0.1s;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  background: #333;
+}
+
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  background: transparent;
+  color: var(--black);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  letter-spacing: 0.3px;
+}
+
+.btn-ghost:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+/* ── LOADING SCREEN ── */
+.loading-box {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.loading-bar-wrap {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  height: 1px;
+  background: var(--black);
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.loading-text {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mid);
+}
+
+/* ── DONE SCREEN ── */
+.done-box {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.done-icon {
+  margin-bottom: 24px;
+}
+
+.done-text {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.done-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mid);
+  margin-bottom: 36px;
+}
+
+.done-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ── ERROR SCREEN ── */
+.error-box {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.error-icon {
+  margin-bottom: 24px;
+}
+
+.error-text {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.error-msg {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mid);
+  margin-bottom: 36px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── FOOTER ── */
+footer {
+  margin-top: auto;
+  padding: 32px 0 40px;
+  border-top: 1px solid var(--border);
+  margin-top: 64px;
+}
+
+footer span {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  body {
+    padding: 0 16px;
+  }
+
+  header {
+    padding: 32px 0 28px;
+    margin-bottom: 40px;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  #drop-zone {
+    padding: 56px 24px;
+  }
+
+  #preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  }
+
+  .done-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
